@@ -28,11 +28,11 @@ public class PersistanceFileService extends PersistanceService{
     private final BufferedWriter writer;
     private final Field[] fieldsToPersist;
     
-    public PersistanceFileService(String _outputFolderPath, String _valueSeperator, Class _classOfEntity) throws IOException{
+    public PersistanceFileService(String _outputFolderPath, String _valueSeperator, Class _classOfEntity, int _userID) throws IOException{
         this.outputFolderPath = _outputFolderPath;
         this.valueSeperator = _valueSeperator;
         this.classOfEntity = _classOfEntity;
-        this.fileName = this.classOfEntity.getSimpleName().toLowerCase() + AppConstants.OUTPUT_FILE_EXT;
+        this.fileName = this.classOfEntity.getSimpleName().toLowerCase() +"_"+Integer.toString(_userID)+ AppConstants.OUTPUT_FILE_EXT;
         writer = new BufferedWriter(new FileWriter(this.outputFolderPath + File.separator + this.fileName, true));
         
         this.fieldsToPersist = getPersistableFields();

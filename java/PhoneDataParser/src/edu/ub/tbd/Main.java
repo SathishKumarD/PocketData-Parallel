@@ -6,13 +6,11 @@
 package edu.ub.tbd;
 
 import edu.ub.tbd.constants.AppConstants;
-import edu.ub.tbd.parser.LogParser;
+import edu.ub.tbd.parser.Parallelize;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 /**
  * This is the driver class of the Phone Data Parser when invoked using jar or command line
  * 
@@ -36,15 +34,15 @@ public class Main {
             }
         }
         
-        LogParser logParser = null;
+        Parallelize parallelizeParser = null;
         try {
             if(startUp()){
                 String srcDIR = AppConstants.SRC_DIR; //Leave this. It helps in reducing Class unload cache. Talk to Sankar before u remove this
-                logParser = new LogParser(srcDIR, AppConstants.SRC_LOG_FILE_EXT);
-                logParser.parseLogsAndWriteFile();
+                parallelizeParser = new Parallelize(srcDIR, AppConstants.SRC_LOG_FILE_EXT);
+                parallelizeParser.RunParserParallely();
                 
                 try {
-                    shutDown(logParser);
+                    shutDown(parallelizeParser);
                 } catch (Exception e) {
                     System.out.println("Improper shutdown of the application");
                     e.printStackTrace();
@@ -55,9 +53,9 @@ public class Main {
             
         } catch (Throwable e) {
             e.printStackTrace();
-            if(logParser != null){
+            if(parallelizeParser != null){
                 try {
-                    logParser.shutDown();
+                    parallelizeParser.shutDown();
                 } catch (Exception ex) {
                     System.out.println("Unable to shutDown LogParser");
                     ex.printStackTrace();
@@ -117,9 +115,10 @@ public class Main {
         return out;
     }
     
-    public static void shutDown(LogParser _logParser) throws Exception{
-        _logParser.shutDown();
+     public static void shutDown(Parallelize _paralleliser) throws Exception{
+        _paralleliser.shutDown();
     }
+    
     
     /*
      * ##############################################################################

@@ -10,7 +10,7 @@ package edu.ub.tbd.entity;
  * @author san
  */
 public class Sql_log extends AbstractEntity{
-    private static int curr_PK_ID = 0;
+    private static volatile int curr_PK_ID = 0;
     
     public static int getCurrPKID(){
         return curr_PK_ID;

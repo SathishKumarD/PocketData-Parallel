@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * @author san
  */
 public class Analytics extends AbstractEntity implements Comparable<Analytics>{
-    private static int curr_PK_ID = 0;
+    private static volatile int curr_PK_ID = 0;
     
     public static int getCurrPKID(){
         return curr_PK_ID;
